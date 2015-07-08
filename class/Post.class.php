@@ -48,14 +48,18 @@ class Post {
 		return new Post($query->fetch());
 	}
 
-	public static function getList($sql) {
-		$result = Db::getInstance()->query($sql)->fetchAll();
-
+	// @FIXME
+	public static function _getList($result) {
 		$posts = array();
 		foreach($result as $post) {
 			$posts[] = new Post($post);
 		}
 		return $posts;
+	}
+
+	public static function getList($sql) {
+		$result = Db::getInstance()->query($sql)->fetchAll();
+		return self::_getList($result);
 	}
 
 	public static function getRandom($sql) {
@@ -84,6 +88,21 @@ class Post {
 		';
 
 		return $html;
+	}
+
+	public function insert() {
+
+		if (empty($this->author) || empty($this->content)) {
+			return false;
+		}
+
+		//$query = $db->prepare('INSERT INTO posts (author, content) VALUES (:author, :content)');
+		$query = Db::getInstance()->prepare('INSERT INTO posts SET author = :author, content = :content, creation_date = NOW()');
+		$query->bindValue('author', $this->author);
+		$query->bindValue('content', $this->content);
+		$query->execute();
+
+		return Db::getInstance()->lastInsertId();
 	}
 
 	/* Getters */
