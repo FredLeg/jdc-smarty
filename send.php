@@ -1,5 +1,5 @@
 <?php
-include_once 'header.php';
+require_once 'inc/config.php';
 
 $author = !empty($_POST['author']) ? strip_tags($_POST['author']) : '';
 $content = !empty($_POST['content']) ? htmlspecialchars($_POST['content']) : '';
@@ -31,32 +31,11 @@ if (!empty($_POST)) {
 	}
 
 }
-?>
 
-	<h1>Envoyez votre Joie du code</h1>
+$vars = array(
+	'author' => $author,
+	'content' => $content,
+	'errors' => $errors
+);
 
-	<hr>
-
-	<?php if (!empty($errors)) { ?>
-	<div class="alert alert-danger" role="danger">
-	<?php
-	foreach($errors as $key => $error) {
-		echo $error.'<br>';
-	}
-	?>
-	</div>
-	<?php } ?>
-
-	<form action="send.php" method="POST">
-		<div class="form-group<?= !empty($errors['author']) ? ' has-error' : '' ?>">
-			<label for="author">Votre nom</label>
-			<input type="text" class="form-control" name="author" id="author" placeholder="Entrez votre nom" value="<?= $author ?>">
-		</div>
-		<div class="form-group<?= !empty($errors['content']) ? ' has-error' : '' ?>">
-			<label for="content">Votre Joie de code</label>
-			<textarea name="content" id="content" class="form-control" rows="5" placeholder="Contenu de votre Joie de code"><?= $content ?></textarea>
-		</div>
-		<button type="submit" class="btn btn-default">Envoyer</button>
-	</form>
-
-<?php include_once 'footer.php' ?>
+Post::displayTemplate('send.tpl', $vars);
