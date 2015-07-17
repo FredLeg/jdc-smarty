@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /php/jdc/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^post/([0-9]+)-([a-zA-Z0-9]+)$ post.php?id=$1 [QSA]
+
+</IfModule>
