@@ -1,5 +1,5 @@
 <?php
-include_once 'header.php';
+require_once 'inc/config.php';
 
 if (empty($_GET['id'])) {
 	header('Location: index.php');
@@ -19,14 +19,10 @@ $back_link = 'index.php';
 if (!empty($_SERVER['HTTP_REFERER'])) {
 	$back_link = $_SERVER['HTTP_REFERER'];
 }
-?>
 
-		<a href="<?= $back_link ?>" class="btn btn-info">Retour</a>
+$vars = array(
+	'post' => $post,
+	'back_link' => $back_link
+);
 
-		<h1>Une Joie du code</h1>
-
-		<hr>
-
-		<?= Post::displayPost($post) ?>
-
-<?php include_once 'footer.php' ?>
+Post::displayTemplate('post.tpl', $vars);
