@@ -1,13 +1,16 @@
 <?php
-include_once 'header.php';
+require_once 'inc/config.php';
 
 $post = Post::getRandom('SELECT * FROM posts ORDER BY RAND() LIMIT 1');
-?>
 
-		<h1>Une Joie du code au hasard</h1>
+$back_link = 'index.php';
+if (!empty($_SERVER['HTTP_REFERER'])) {
+	$back_link = $_SERVER['HTTP_REFERER'];
+}
 
-		<hr>
+$vars = array(
+	'post' => $post,
+	'back_link' => $back_link
+);
 
-		<?= Post::displayPost($post) ?>
-
-<?php include_once 'footer.php' ?>
+Post::displayTemplate('post.tpl', $vars);
