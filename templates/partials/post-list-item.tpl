@@ -3,7 +3,7 @@
     <blockquote>
       <p>
 		{if $max_length > 0}
-			{Utils::cutString($post->content, $max_length, "... <a href=\"post/{$post->id}-{Utils::slugify($post->title)}\">Lire la suite</a>")}
+			{Utils::cutString($post->content, $max_length, "... <a href=\"post/{$post->id}\">Lire la suite</a>")}
 		{else}
 			{$post->content|nl2br}
 		{/if}
