@@ -3,7 +3,7 @@
 //require_once 'inc/db.php';
 //require_once 'inc/func.php';
 
-global $protocol, $domain, $current_dir, $root_path, $root_dir;
+global $protocol, $domain, $current_dir, $root_path, $root_dir, $current_page, $pages;
 
 $protocol = (@$_SERVER['HTTPS'] == 'on' ? 'https' : 'http'); // http
 $domain = $_SERVER['HTTP_HOST']; // localhost
@@ -17,10 +17,10 @@ $root_dir = str_replace(array('\\', 'inc'), array('/', ''), __DIR__); // C:/xamp
 $root_path = $protocol.'://'.$domain.'/'.str_replace($_SERVER['DOCUMENT_ROOT'], '', $root_dir); // http://localhost/jdc/
 
 $pages = array(
-    'index.php' => 'Home',
-    'random.php' => 'JDC aléatoire',
-    'send.php' => 'Envoyer votre JDC',
-    'search.php' => 'Rechercher une JDC'
+    $root_path.'index.php' => 'Home',
+    $root_path.'random.php' => 'JDC aléatoire',
+    $root_path.'send.php' => 'Envoyer votre JDC',
+    $root_path.'search.php' => 'Rechercher une JDC'
 );
 
 require_once 'autoload.php';
