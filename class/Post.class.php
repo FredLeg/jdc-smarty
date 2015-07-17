@@ -67,18 +67,40 @@ class Post {
 		return $posts[0];
 	}
 
+	public static function displayTemplate($tpl, $vars = array(), $fetch = false) {
+
+		try {
+
+			global $pages, $current_page;
+
+			$smarty = new Smarty;
+
+			$default_vars = array(
+				'pages' => $pages,
+				'current_page' => $current_page
+			);
+
+			$vars = array_merge($default_vars, $vars);
+
+			$smarty->assign($vars);
+
+			if ($fetch === true) {
+				return $smarty->fetch($tpl);
+			}
+			return $smarty->display($tpl);
+		} catch (Exception $e) {
+			exit($e->getMessage());
+		}
+	}
+
 	public static function displayPost($post, $max_length = 0) {
 
-		$smarty = new Smarty();
-
-		$smarty->assign(
-			array(
-				'post' => $post,
-				'max_length' => $max_length
-			)
+		$vars = array(
+			'post' => $post,
+			'max_length' => $max_length
 		);
 
-		return $smarty->fetch('partials/post-list-item.tpl');
+		return self::displayTemplate('partials/post-list-item.tpl', $vars,  true);
 	}
 
 	public function insert() {
