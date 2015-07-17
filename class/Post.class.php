@@ -69,25 +69,16 @@ class Post {
 
 	public static function displayPost($post, $max_length = 0) {
 
-		$html = '
-		<div class="post">
-		    <p>'.date('d-m-Y H:i:s', strtotime($post->creation_date)).' par <a href="#">'.$post->author.'</a></p>
-		    <blockquote>
-		      <p>';
+		$smarty = new Smarty();
 
-		if ($max_length > 0) {
-			$html .= Utils::cutString($post->content, $max_length, '... <a href="post.php?id='.$post->id.'">Lire la suite</a>');
-		} else {
-			$html .= nl2br($post->content);
-		}
+		$smarty->assign(
+			array(
+				'post' => $post,
+				'max_length' => $max_length
+			)
+		);
 
-		$html .= '
-		      </p>
-		    </blockquote>
-		</div>
-		';
-
-		return $html;
+		return $smarty->fetch('partials/post-list-item.tpl');
 	}
 
 	public function insert() {
@@ -115,10 +106,7 @@ class Post {
 	public function getContent() {
 		return nl2br(htmlspecialchars($this->content));
 	}
-	public function getCreationDate($format = 'd-m-Y H:i:s') {
-		if (empty($format)) {
-			$format = 'Y-m-d H:i:s';
-		}
+	public function getCreationDate($format = 'Y-m-d H:i:s') {
 		return date($format, strtotime($this->creation_date));
 	}
 
