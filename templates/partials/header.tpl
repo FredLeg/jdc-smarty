@@ -1,8 +1,3 @@
-<?php
-require_once 'inc/config.php';
-
-$current_page = basename($_SERVER['PHP_SELF']);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +19,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
 </head>
 <body>
 
-	<?php include_once 'navbar.php' ?>
+	{include file='partials/navbar.tpl'}
 
 	<div class="container">

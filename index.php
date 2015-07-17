@@ -1,18 +1,16 @@
 <?php
-include_once 'header.php';
+require_once 'inc/config.php';
 
 $posts = Post::getList('SELECT * FROM posts ORDER BY creation_date DESC LIMIT 10');
-?>
 
-		<h1>Les dernières Joies du code</h1>
+$smarty = new Smarty;
 
-		<hr>
+$vars = array(
+	'pages' => $pages,
+	'current_page' => $current_page,
+	'posts' => $posts
+);
 
-		<?php
-		foreach($posts as $post) {
-			echo Post::displayPost($post, 100);
-			echo '<hr>';
-		}
-		?>
+$smarty->assign($vars);
 
-<?php include_once 'footer.php' ?>
+$smarty->display('index.tpl');

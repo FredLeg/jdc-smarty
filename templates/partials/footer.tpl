@@ -1,8 +1,12 @@
+	{if !isset($current_date)}
+		{assign var=current_date value=date('Y')}
+	{/if}
+
 	</div><!-- .container -->
 
 	<footer class="footer">
 		<div class="container">
-			<p class="text-muted">Les Joies du Code © <?= date('Y') ?></p>
+			<p class="text-muted">Les Joies du Code © {$current_date}</p>
 		</div>
 	</footer>
 
